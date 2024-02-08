@@ -15,9 +15,11 @@ export const connexion = async (topic) => {
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message, heartbeat, pause }) => {
+            let messageJson = JSON.parse(message.value.toString());
             console.log({
-                time: getDateFromTimestamp(message.timestamp.toString()),
-                value: message.value.toString(),
+                date: getDateFromTimestamp(message.timestamp.toString()),
+                utilisateur: messageJson.user.toString(),
+                message: messageJson.message.toString(),
             })
         },
     })
